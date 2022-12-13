@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'pivovaroff.jpa-save-antipatterns'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //db
+    runtimeOnly 'org.postgresql:postgresql'
+    //db-migration
+    implementation 'org.liquibase:liquibase-core:4.17.2'
+    //tools
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    //test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.vladmihalcea:db-util:1.0.6'
+    testImplementation 'org.testcontainers:postgresql:1.17.6'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

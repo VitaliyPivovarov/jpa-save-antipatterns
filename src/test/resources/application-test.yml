@@ -1,0 +1,9 @@
+spring:
+
+  liquibase:
+    contexts: test
+
+  datasource:
+    url: ${POSTGRES_HOST}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
