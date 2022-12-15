@@ -16,7 +16,15 @@ public class PostWithEmbeddedUUIDService {
     private final PostWithEmbeddedUUIDRepository postWithEmbeddedUUIDRepository;
 
     @Transactional
-    public PostWithEmbeddedUUID create(PostWithEmbeddedUUID post) {
+    public PostWithEmbeddedUUID create2Req(String title) {
+        PostWithEmbeddedUUID post = PostWithEmbeddedUUID.build(title);
+        post = postWithEmbeddedUUIDRepository.save(post);
+        return post;
+    }
+
+    @Transactional
+    public PostWithEmbeddedUUID create1Req(String title) {
+        PostWithEmbeddedUUID post = PostWithEmbeddedUUID.buildWithPersistable(title);
         post = postWithEmbeddedUUIDRepository.save(post);
         return post;
     }

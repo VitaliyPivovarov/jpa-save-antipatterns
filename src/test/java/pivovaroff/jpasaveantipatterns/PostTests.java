@@ -18,7 +18,7 @@ class PostTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        postService.create(Post.build("Hello!"));
+        postService.create("Hello!");
 
         //assert
         assertInsertCount(1);
@@ -28,7 +28,7 @@ class PostTests extends BaseTest {
     @Test
     void changeTitleWithEvents() {
         //arrange
-        Post p = postService.create(Post.build("Hello!"));
+        Post p = postService.create("Hello!");
 
         //act
         SQLStatementCountValidator.reset();
@@ -46,7 +46,7 @@ class PostTests extends BaseTest {
     @Test
     void changeTitleWithoutEvents() {
         //arrange
-        Post p = postService.create(Post.build("Hello!"));
+        Post p = postService.create("Hello!");
 
         //act
         SQLStatementCountValidator.reset();
@@ -65,7 +65,7 @@ class PostTests extends BaseTest {
     @Test
     void changeTitleWithEventsRollback() {
         //arrange
-        Post p = postService.create(Post.build("Hello!"));
+        Post p = postService.create("Hello!");
 
         //act
         SQLStatementCountValidator.reset();

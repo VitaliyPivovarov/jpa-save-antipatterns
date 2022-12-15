@@ -15,8 +15,7 @@ class PostWithEmbeddedUUIDTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        PostWithEmbeddedUUID p = postWithEmbeddedUUIDService.create(
-                PostWithEmbeddedUUID.buildWithPersistable("1 request for insert!"));
+        PostWithEmbeddedUUID p = postWithEmbeddedUUIDService.create1Req("1 request for insert!");
 
         //assert
         assertInsertCount(1);
@@ -29,8 +28,7 @@ class PostWithEmbeddedUUIDTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        PostWithEmbeddedUUID p = postWithEmbeddedUUIDService.create(
-                PostWithEmbeddedUUID.build("2 request for insert!"));
+        PostWithEmbeddedUUID p = postWithEmbeddedUUIDService.create2Req("2 request for insert!");
 
         //assert
         assertInsertCount(1);

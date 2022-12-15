@@ -22,18 +22,21 @@ public class PostWithUUIDService {
     private EntityManager em;
 
     @Transactional
-    public PostWithUUID createWithPersist(PostWithUUID post) {
+    public PostWithUUID createWithPersist(String title) {
+        PostWithUUID post = PostWithUUID.build(title);
         post = postWithUUIDRepository.persist(post);
         return post;
     }
 
     @Transactional
-    public void createWithEmPersist(PostWithUUID post) {
+    public void createWithEmPersist(String title) {
+        PostWithUUID post = PostWithUUID.build(title);
         em.persist(post);
     }
 
     @Transactional
-    public PostWithUUID createWith2Req(PostWithUUID post) {
+    public PostWithUUID createWith2Req(String title) {
+        PostWithUUID post = PostWithUUID.build(title);
         post = postWithUUIDRepository.save(post);
         return post;
     }

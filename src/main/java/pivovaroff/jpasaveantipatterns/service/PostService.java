@@ -15,7 +15,8 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Post create(Post post) {
+    public Post create(String title) {
+        Post post = Post.build(title);
         return postRepository.save(post);
     }
 

@@ -16,7 +16,7 @@ class PostWithUUIDTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        PostWithUUID p = postWithUUIDService.createWithPersist(PostWithUUID.build("Hi!"));
+        PostWithUUID p = postWithUUIDService.createWithPersist("Hi!");
 
         //assert
         assertInsertCount(1);
@@ -29,7 +29,7 @@ class PostWithUUIDTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        postWithUUIDService.createWithEmPersist(PostWithUUID.build("Hi!"));
+        postWithUUIDService.createWithEmPersist("Hi!");
 
         //assert
         assertInsertCount(1);
@@ -42,7 +42,7 @@ class PostWithUUIDTests extends BaseTest {
         SQLStatementCountValidator.reset();
 
         //act
-        postWithUUIDService.createWith2Req(PostWithUUID.build("Hi!"));
+        postWithUUIDService.createWith2Req("Hi!");
 
         //assert
         assertInsertCount(1);
@@ -53,7 +53,7 @@ class PostWithUUIDTests extends BaseTest {
     void createWith2RequestEmMerge() {
         //arrange
         SQLStatementCountValidator.reset();
-        PostWithUUID p = postWithUUIDService.createWithPersist(PostWithUUID.build("Hi!"));
+        PostWithUUID p = postWithUUIDService.createWithPersist("Hi!");
 
         //act
         postWithUUIDService.updateWithMerge(p, "Merge");
@@ -67,7 +67,7 @@ class PostWithUUIDTests extends BaseTest {
     void createWithPersist2Request() {
         //arrange
         SQLStatementCountValidator.reset();
-        PostWithUUID p = postWithUUIDService.createWithPersist(PostWithUUID.build("Hi!"));
+        PostWithUUID p = postWithUUIDService.createWithPersist("Hi!");
 
         //act
         postWithUUIDService.updateWithFlush(p.getId(), "Merge");
