@@ -57,7 +57,7 @@ How you can see the Hibernate executes SQL select query before SQL insert query.
 If we open implementation of Spring Data save method we can see this code:
 
 ```java
-    @Transactional
+@Transactional
 @Override
 public<S extends T> S save(S entity){
         Assert.notNull(entity,"Entity must not be null.");
@@ -128,11 +128,8 @@ Create the interface:
 
 ```java
 public interface HibernateRepository<T> {
-
     <S extends T> S persist(S entity);
-
     <S extends T> S merge(S entity);
-
 }
 ```
 
