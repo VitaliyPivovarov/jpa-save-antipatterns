@@ -34,20 +34,18 @@ public class PostWithEmbeddedUUID {
 
 ```java
     @Transactional
-public PostWithEmbeddedUUID create(String title){
+    public PostWithEmbeddedUUID create(String title) {
         PostWithEmbeddedUUID post=PostWithEmbeddedUUID.build(title);
         post=postWithEmbeddedUUIDRepository.save(post);
         return post;
-        }
+    }
 ```
 
 ```sql
 Hibernate:
-select postwithem0_.id as id1_1_0_, postwithem0_.title as title2_1_0_
-from post_uuid postwithem0_
-where postwithem0_.id = ? Hibernate:
-insert into post_uuid (title, id)
-values (?, ?)
+select postwithem0_.id as id1_1_0_, postwithem0_.title as title2_1_0_ from post_uuid postwithem0_ where postwithem0_.id = ? 
+Hibernate:
+insert into post_uuid (title, id) values (?, ?)
 ```
 
 How you can see the Hibernate executes SQL select query before SQL insert query.
@@ -59,16 +57,16 @@ If we open implementation of Spring Data save method we can see this code:
 ```java
 @Transactional
 @Override
-public<S extends T> S save(S entity){
-        Assert.notNull(entity,"Entity must not be null.");
+public<S extends T> S save(S entity) {
+    Assert.notNull(entity,"Entity must not be null.");
 
-        if(entityInformation.isNew(entity)){
+    if (entityInformation.isNew(entity)) {
         em.persist(entity);
         return entity;
-        }else{
+    } else {
         return em.merge(entity);
-        }
-        }
+    }
+}
 ```
 
 We are interested in seeming the `isNew` method (we will skip the implementation of this method here)
@@ -118,8 +116,7 @@ public class PostWithEmbeddedUUID implements Persistable<PostWithEmbeddedUUID.Po
 
 ```sql
 Hibernate:
-insert into post_uuid (title, id)
-values (?, ?)
+insert into post_uuid (title, id) values (?, ?)
 ```
 
 ### Solution 2 (refuse to save method)
@@ -136,18 +133,17 @@ public interface HibernateRepository<T> {
 The entity's repository need to extend HibernateRepository:
 
 ```java
-
-@Repository
-public interface PostWithEmbeddedUUIDRepository extends JpaRepository<PostWithEmbeddedUUID, UUID>,
-        HibernateRepository<PostWithEmbeddedUUID> {
-}
+    @Repository
+    public interface PostWithEmbeddedUUIDRepository extends JpaRepository<PostWithEmbeddedUUID, UUID>,
+            HibernateRepository<PostWithEmbeddedUUID> {
+    }
 ```
 
 And in service layer invoke 'persist' method:
 
 ```java
     @Transactional
-public PostWithUUID create(String title){
+    public PostWithUUID create(String title){
         PostWithEmbeddedUUID post=PostWithEmbeddedUUID.build(title);
         post=PostWithEmbeddedUUIDRepository.persist(post);
         return post;
@@ -156,8 +152,7 @@ public PostWithUUID create(String title){
 
 ```sql
 Hibernate:
-insert into post_uuid (title, id)
-values (?, ?)
+insert into post_uuid (title, id) values (?, ?)
 ```
 
 ### Solution 3 (PersistenceContext)
@@ -166,10 +161,10 @@ Autowires `PersistenceContext` and invoke `persist` method:
 
 ```java
     @PersistenceContext
-private EntityManager em;
-
-@Transactional
-public void create(String title){
+    private EntityManager em;
+    
+    @Transactional
+    public void create(String title){
         PostWithEmbeddedUUID post=PostWithEmbeddedUUID.build(title);
         em.persist(post);
         }
@@ -177,8 +172,7 @@ public void create(String title){
 
 ```sql
 Hibernate:
-insert into post_uuid (title, id)
-values (?, ?)
+insert into post_uuid (title, id) values (?, ?)
 ```
 
 ### Conclusion
